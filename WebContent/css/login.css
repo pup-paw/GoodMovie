@@ -1,0 +1,132 @@
+ body { 
+ 	margin:auto; 
+ 	width:100%; 
+ 	color:#000000; 
+ 	text-align:center; 
+ 	background-color: #FDFCF0;
+ 	font-size: 13px; 
+}
+
+/* 로고 위치 */
+div.menu {
+	position: relative;
+}
+div.logo {
+	position: relative;
+	left: -390px;
+	bottom: -100px;
+}
+  
+/* menu section */
+a.menu {
+	width: 50px;
+	height: 20px;
+	margin-left: 30px;
+	margin-right: 30px;
+	font-style: bold;
+	font-size: 20px;
+}
+
+/* subtitle section */
+.subtitle {
+	width: 100%;
+	height: 30px;
+	color: #ffffff;
+	font-size: 30px;
+}
+
+
+a:link { color : #000000; text-decoration: none; } 
+a:visited { color:#000000; text-decoration: none; }
+a:hover { color:#000000; text-decoration: none; } 
+a:active { color:#000000; text-decoration: none; }
+::selection { background-color: #999999; color: #ffffff; }
+ 
+ input[type="text"] {
+ 	width: 250px;
+ 	height: 50;
+ 	line-height: normal;
+ 	padding: .8em .5em;
+ 	margin-top: 10px;
+ 	outline: none;
+ 	background-image: url("/image/login_icon.png");
+ }
+ 
+ input[type="password"] {
+ 	width: 250px;
+ 	height: 50;
+ 	line-height: normal;
+ 	padding: .8em .5em;
+ 	margin-top: 10px;
+ 	outline: none;
+ 	background-image: src("image/pw_icon.png");
+ 	background-position: 5px 4px;
+	background-repeat: no-repeat;
+ }
+ 
+input[type="submit"] {
+	width: 270px;
+	height: 50px;
+ 	line-height: normal;
+ 	padding: .8em .5em;
+ 	margin-top: 10px;
+ 	background-color: #ff0000;
+ 	color: #ffffff;
+ 	outline: none;
+ 	border: 2px solid #000000;
+}
+
+
+input[type=button] {
+	width: 270px;
+	height: 50px;
+ 	line-height: normal;
+ 	padding: .8em .5em;
+ 	margin-top: 10px;
+ 	background-color: #8D8D8D;
+ 	color: #ffffff;
+ 	outline: none;
+ 	border: 2px solid #000000;
+}
+
+div.container {
+	width: 820px;
+	heith: 700px;
+	margin: auto;
+	padding: 70px;
+}
+
+dt {
+	width: 150px;
+	border: 2px solid #000;
+	margin: auto;
+	
+}
+
+button {
+	width: 130px;
+	height: 50px;
+	border: 4px solid #000;
+}
+
+
+#userlogin {
+	margin-right: -2px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	background-color: #ff0000;
+	color: #fff;
+	
+}
+
+#adlogin {
+	margin-left: -2px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	background-color: #8D8D8D;
+	color: #fff;
+}
+hr {
+	border: 2px solid #000000;
+	margin-top: -3px;
+}

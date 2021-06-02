@@ -1,0 +1,13 @@
+/* CSS for 'book.html' */
+    
+.movie input [type=radio],
+.city input [type=radio],
+.area input [type=radio]
+{ display: none; }
+
+.seoul_tab, 
+.gyeonggi_tab,
+.incheon_tab
+{ visibility: hidden; }
+
+#movie_tab > #city_tab
