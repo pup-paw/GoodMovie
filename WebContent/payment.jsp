@@ -5,17 +5,17 @@
 <%
    request.setCharacterEncoding("utf-8");
 
-   TicketingBean tb = (TicketingBean)session.getAttribute("tb");
-   MbeanMovieScreening ms = (MbeanMovieScreening)session.getAttribute("ms");
-   String memID = (String)session.getAttribute("memID");
-   tb.setMemID(memID);
+   TicketingBean tb = (TicketingBean)session.getAttribute("tb"); //session을 통해 이전 페이지의 tb 정보를 가져옴
+   MbeanMovieScreening ms = (MbeanMovieScreening)session.getAttribute("ms"); //session을 통해 이전 페이지의 ms 정보를 가져옴
+   String memID = (String)session.getAttribute("memID"); //session을 통해 로그인 되어있는 회원 아이디를 가져옴
+   tb.setMemID(memID); //tb의 memID를 set
    
-   tb.setPayMethod(request.getParameter("payMethod"));
-   tb.setTknum(DBcinema.getRandomStr(4));
+   tb.setPayMethod(request.getParameter("payMethod")); //이전 페이지의 payMethod를 가져와 tb에 set
+   tb.setTknum(DBcinema.getRandomStr(4)); //tb의 Tknum를 랜덤한 4개의 문자로 set
    
    Connection cn = DBcinema.loadConnect();
-   ResultSet rst = DBcinema.insertTicketing(tb);
-   
+   ResultSet rst = DBcinema.insertTicketing(tb); //tb 정보를 ticketing 테이블엥 저장
+   //movieScreening 테이블 중 mno, rsvDate, tname, scrTime을 갖는 정보를 가져옴
    ResultSet rs = DBcinema.selectMovieScreening(ms.getMno(), tb.getRsvDate(), ms.getTname(), ms.getScrTime());
    String mno = "mno";
    try {

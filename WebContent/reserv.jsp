@@ -2,6 +2,7 @@
      import="java.sql.*, cinema.*, functions.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
+<!-- Java Bean을 이용해 movie 객체를 생성 -->
 <jsp:useBean id="mvBean" class="functions.MovieBean" />
 
 <!DOCTYPE html>
@@ -33,10 +34,10 @@
 <body>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String adID = (String)session.getAttribute("adID");
-	String memID = (String)session.getAttribute("memID");
+	String adID = (String)session.getAttribute("adID"); //session을 통해 로그인 된 관리자 아이디를 가져옴
+	String memID = (String)session.getAttribute("memID"); //session을 통해 로그인 된 회원 아이디를 가져옴
 	
-	ArrayList<Movie> marr = mvBean.getMovieList();
+	ArrayList<Movie> marr = mvBean.getMovieList(); //movie 정보를 갖는 ArrayList를 생성
 %>
 
    <!-- logo -->
@@ -60,6 +61,7 @@
     </div></strong><br>
     
     <div class="container">
+    <!-- 제출하면 showMovie 페이지로 넘어감 -->
     <form action="showMovie.jsp" method="post">
     <table>
  			<thead height="40px">
@@ -75,7 +77,8 @@
  				<!-- 영화 선택 -->
                	<td><select name="mno">
                         <option>영화를 선택해주세요</option>
-                        <%for(int i=0;i<marr.size();i++) { %>
+                        <%for(int i=0;i<marr.size();i++) { %> <!-- ArrayList의 크기만큼 -->
+                        <!-- 옵션태그의 value를 movie의 mno로 설정, title을 보여줌 -->
                         <option value="<%=marr.get(i).getMno()%>"><%=marr.get(i).getTitle() %></option>
                         <% } %>
                		</select><br><br>

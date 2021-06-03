@@ -3,6 +3,7 @@
      import="java.sql.*, cinema.*, functions.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
+<!-- Java Bean을 이용해 movie 객체를 사용 -->
 <jsp:useBean id="mvBean" class="functions.MovieBean" />
 <!DOCTYPE html>
 <html>
@@ -34,16 +35,16 @@
 <BODY>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String adID = (String)session.getAttribute("adID");
-	String memID = (String)session.getAttribute("memID");
+	String adID = (String)session.getAttribute("adID"); //session을 통해 로그인 되어있는 관리자 아이디를 가져옴
+	String memID = (String)session.getAttribute("memID"); //session을 통해 로그인 되어있는 회원 아이디를 가져옴
 	
-	ArrayList<Movie> marr = mvBean.getMovieList();
+	ArrayList<Movie> marr = mvBean.getMovieList(); //movie ArrayList 생성
 %>
    <!-- logo -->
     <div class="logo">
     	<input type="image" src="image/logo.png" width="230" onClick="location.href='manager1.jsp'">
     </div>
-    
+    <!-- 메뉸 -->
     <p class="subtitle"><input type="image" src="image/l_manager.png"></p><br>
     <div class="menu"><strong>
         <a class="menu" href="manager1.jsp">1. 영화 등록</a>
@@ -54,12 +55,14 @@
     </div></strong><br>
     
     <div class="container"><br>
+    <!-- 제출 시 manage_lookUp으로 이동 -->
     	<form action="manage_lookUp.jsp" method="post">
             <div>
             	예매 현황 조회<br><br><br>
             	<select name="mno">
                   <option>영화 선택</option>
                         <%for(int i=0;i<marr.size();i++) { %>
+                        <!-- marr의 mno를 가져와 option의 value로 설정, title을 가져와 사용자에게 보여줌 -->
                         <option value="<%=marr.get(i).getMno()%>"><%=marr.get(i).getTitle() %></option>
                         <% } %>
                </select><br><br>

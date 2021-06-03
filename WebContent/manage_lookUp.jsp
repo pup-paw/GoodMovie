@@ -1,3 +1,4 @@
+<!-- 관리자 - 예매 목록 조회 페이지 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.sql.*, cinema.*, functions.*" %>
 <%@ page import="java.util.*" %>
@@ -21,13 +22,13 @@
  
 <%
 	request.setCharacterEncoding("utf-8");
-	String adID = (String)session.getAttribute("adID");
+	String adID = (String)session.getAttribute("adID"); //session을 통해 로그인 되어있는 관리자 아이디를 가져옴
 
    Connection cn = DBcinema.loadConnect();
-   ResultSet rs = DBcinema.lookUpMovie(request.getParameter("mno"));
+   ResultSet rs = DBcinema.lookUpMovie(request.getParameter("mno")); //이전 페이지의 mno를 받아 movie 테이블의 mno정보를 가져옴
    
    try {
-      while(rs.next())
+      while(rs.next()) //rs의 끝까지
        {
    
 %>
@@ -49,25 +50,9 @@
 %>
       </table>
       </div>
+      <!-- 이전 페이지로 돌아가는 버튼 -->
       <form class="previous" action="manager3.jsp" method="post">
     	<input  type="image" src="image/previous.png" name="payMethod" width="150px">
     </form>
 </body>
 </html>
-         <%--
-         request.setCharacterEncoding("euc-kr");
-   
-         String title = (String) request.getParameter("title");
-   
-         DBcinema.loadConnect();
-         ResultSet rs = DBcinema.lookUpMovie(title);
-   
-         request.setAttribute("title", title+" 예매 현황 조회");
-         request.setAttribute("RS", rs);
-         request.getRequestDispatcher("manage_lookUp.jsp").include(request, response);
-         
-         //ServletContext sc = getServletContext();
-         //RequestDispatcher rd = sc.getRequestDispatcher("/listRS.jsp");
-         //rd.forward(request, response);
-         //request.getRequestDispatcher("listRS.jsp").forward(request, response);
-      --%>

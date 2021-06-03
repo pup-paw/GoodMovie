@@ -4,12 +4,12 @@
 <%@ page import="functions.*" %>
 <%
    request.setCharacterEncoding("utf-8");
-   String memID = (String)session.getAttribute("memID");
+   String memID = (String)session.getAttribute("memID"); //session을 통해 로그인 되어있는 회원 아이디를 가져옴
 
-   TicketingBean tb = (TicketingBean)session.getAttribute("tb");
-   MbeanMovieScreening ms = (MbeanMovieScreening)session.getAttribute("ms");
-   tb.setpNum(Integer.parseInt(request.getParameter("pNum")));
-   
+   TicketingBean tb = (TicketingBean)session.getAttribute("tb"); //session을 통해 이전 페이지에 저장된 tb 정보를 가져옴
+   MbeanMovieScreening ms = (MbeanMovieScreening)session.getAttribute("ms"); //session을 통해 이전 페이지에 저장된 tb 정보를 가져옴
+   tb.setpNum(Integer.parseInt(request.getParameter("pNum"))); //tb의 pNum을 이전 페이지에서 가져온 pNum으로 set
+   //이전 페이지에서 가져온 scrTime을 java.sql.Time형으로 형 변환 후 ms의 scrTime으로 set
    java.sql.Time scrTime;
    try {
       scrTime = java.sql.Time.valueOf(request.getParameter("scrTime"));
@@ -19,22 +19,23 @@
    ms.setScrTime(scrTime);
    
    Connection cn = DBcinema.loadConnect();
+   //movieScreening 테이블의 정보 중 mno, rsvDate, tname, scrTime 값을 갖는 정보를 가져옴
    ResultSet rs = DBcinema.selectMovieScreening(ms.getMno(), tb.getRsvDate(), ms.getTname(), ms.getScrTime());
    String mno = "mno";
    String enno = "enno";
    try {
-      while(rs.next()) {
+      while(rs.next()) { //rs의 끝까지
          mno = rs.getString("mno");
-         tb.setTotal(rs.getInt("fee")*tb.getpNum());
+         tb.setTotal(rs.getInt("fee")*tb.getpNum()); //(요금*예매 인원수)를 total 값으로 저장
          tb.setEnno(rs.getString("enno"));
       }
    } catch(SQLException e) {
       System.out.println("sqlException");
    }
-   if(tb.getTotal()<=13000*tb.getpNum()) {
-      tb.setDiscount(true);
+   if(tb.getTotal()<=13000*tb.getpNum()) { //total 값이 (정상ㅇ가*예매인원수) 보다 작으면
+      tb.setDiscount(true); //할인 여부를 true로 설정
    }
-   ResultSet rs2 = DBcinema.selectMovie(mno);
+   ResultSet rs2 = DBcinema.selectMovie(mno); //movie 테이블 중 mno 값을 가진 정보를 가져옴
 %>
 
 <!DOCTYPE html>
@@ -158,9 +159,10 @@
  			</tbody>
  	</table><br>
    	
+   	<!-- 제출 시 payment 페이지로 이동 -->
     <form action="payment.jsp" method="post">
-    	<input  type="image" src="image/paycard.png" name="payMethod" width="180px">
-    	<input  type="image" src="image/paycash.png" name="payMethod" width="180px">
+    	<input  type="image" src="image/paycard.png" name="payMethod" width="180px"> <!-- 카드결제 -->
+    	<input  type="image" src="image/paycash.png" name="payMethod" width="180px"> <!-- 현금결제 -->
     </form>
     
 </body>

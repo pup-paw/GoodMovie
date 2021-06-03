@@ -53,7 +53,9 @@
         <a href="sessionLogout.jsp">로그아웃</a>
     </div></strong><br>
     
+    <!-- 상영시간표 등록 -->
     <div class="container"><br>
+    		<!-- 입력시 manage_movieScreening으로 이동 -->
             <form action="manage_movieScreening.jsp" method="post">
             
             <table>
@@ -94,11 +96,6 @@
                         <%for(int i=0;i<marr.size();i++) { %>
                         <option value="<%=marr.get(i).getMno()%>"><%=marr.get(i).getTitle() %></option>
                         <% } %>
-                        
-                        <!--  <option value="M501">귀멸의 칼날</option>
-                        <option value="M502">인셉션</option>
-                        <option value="M511">엑시트</option>
-                        <option value="M512">테넷</option>-->
                         
                   </select>
                   </td>

@@ -2,18 +2,20 @@
     pageEncoding="UTF-8" import="java.sql.*, cinema.*, functions.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="functions.*" %>
+<!-- Java Bean을 통해 movieScreening, ticketing 객체를 생성 -->
 <jsp:useBean id="ms" class="functions.MbeanMovieScreening" scope="page"/>
 <jsp:useBean id="tb" class="functions.TicketingBean" scope="page" />
 <%
    request.setCharacterEncoding("utf-8");
-   session.setAttribute("ms", ms);
-   session.setAttribute("tb", tb);
-   String memID = (String)session.getAttribute("memID");
+   session.setAttribute("ms", ms); //session을 통해 movieScreening 객체 정보를 ms에 저장
+   session.setAttribute("tb", tb); //session을 통해 ticketing 객체 정보를 tb에 저장
+   String memID = (String)session.getAttribute("memID"); //session을 통해 로그인된 회원 아이디의 정보를 가져옴
 
-   ms.setMno(request.getParameter("mno"));
-   String city = request.getParameter("city");
-   String area = request.getParameter("area");
-   ms.setTname(area+"점");
+   ms.setMno(request.getParameter("mno")); //이전 페이지의 mno를 ms의 mno로
+   String city = request.getParameter("city"); //이전 페이지의 city를 가져옴
+   String area = request.getParameter("area"); //이전 페이지의 area를 가져옴
+   ms.setTname(area+"점"); //tname을 area+"점" 으로 set
+   //이전 페이지의 rsvDate를 가져와 java.sql.Date형으로 변환 후 tb의 rsvDate 로 set
    java.sql.Date rsvDate;
    try {
       rsvDate = java.sql.Date.valueOf(request.getParameter("rsvDate"));
@@ -21,22 +23,24 @@
       rsvDate = java.sql.Date.valueOf("2021-06-01");
    }
    tb.setRsvDate(rsvDate);
+   //movieScreening 테이블 중 tname과 mno의 정보를 갖는 정보들을 select
    String enno = null;
    try{
    		Connection con = DBcinema.loadConnect();
    		PreparedStatement pstmt = con.prepareStatement("select enno from moviescreening where tname='"+ms.getTname()+"' and mno='"+ms.getMno()+"'");
    		ResultSet rsc = pstmt.executeQuery();
+   		//가져온 정보 중 enno를 저장
    		while(rsc.next()) {
    			enno = rsc.getString("enno");
    		}
    }catch(SQLException e) {
 	      e.printStackTrace();
 	  }
-   int pCntSum = DBcinema.selectSumpCnt(enno);
-   DBcinema.updatepCnt(enno, pCntSum);  
+   int pCntSum = DBcinema.selectSumpCnt(enno); //enno의 총 예약자 수를 구함
+   DBcinema.updatepCnt(enno, pCntSum); //enno 등록번호를 갖고있는 정보의 예약자 수를 업데이트함
    
    Connection cn = DBcinema.loadConnect();
-   ResultSet rs = DBcinema.selectMovieScreening(ms.getMno(), tb.getRsvDate(), ms.getTname());
+   ResultSet rs = DBcinema.selectMovieScreening(ms.getMno(), tb.getRsvDate(), ms.getTname()); //movieScreening 테이블 중 mno, rsvDate, tname을 갖는 정보를 가져옴
 %>
 <!DOCTYPE html>
 <html>
@@ -71,6 +75,7 @@
     </div></strong><br>
   
     <div class="container">
+    <!-- 제출시 reservation으로 이동 -->
     <form action="reservation.jsp" method="post">
      <table>
  			<thead height="40px">
